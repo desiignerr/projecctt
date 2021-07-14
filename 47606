@@ -1,0 +1,21 @@
+<?php
+session_start();
+require_once("dbcontroller.php");
+$db_handle = new DBController();
+
+if($conn === false){
+    die("ERROR: Could not connect. " . mysqli_connect_error());}
+
+$address["id"] = mysqli_real_escape_string($conn, $_REQUEST['id']);
+$address["date"] = mysqli_real_escape_string($conn, $_REQUEST['date']);
+$address["name"] = mysqli_real_escape_string($conn, $_REQUEST['name']);
+$address["location"] = mysqli_real_escape_string($conn, $_REQUEST['location']);
+$address["email"] = mysqli_real_escape_string($conn, $_REQUEST['email']);
+
+$sql = "INSERT INTO address (id, date, name, location, email) VALUES ('$address[id]', '$address[date]', '$address[name]', '$address[location], '$address[email]')";
+if(mysqli_query($conn, $sql)){
+    echo "Records added successfully.";
+} else{
+    echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
+}
+?>
